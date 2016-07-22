@@ -46,3 +46,10 @@ class Zsh(Generic):
 
     def how_to_configure(self):
         return 'eval $(thefuck --alias)', '~/.zshrc'
+
+    def put_to_history(self, command):
+        history_file = os.environ.get("HISTFILE",
+                                      os.path.expanduser('~/.zsh_history'))
+        with open(history_file, "a") as f:
+            f.write(": {time_stamp}:0;{command}\n".format(
+                time_stamp=int(time()), command=command))
